@@ -1,12 +1,3 @@
-real```sql
-select get_square(2);
-
->> 4
-
-select get_square(null);
-
->> 0
-```
 
 ## Presto Version Compatibility
 
@@ -19,9 +10,7 @@ select get_square(null);
  Functions can be added using annotations, follow https://prestosql.io/docs/current/develop/functions.html for details on how to add functions.
 
 
-Install
----
-
+## Install
 build
 ```
 $ mvn clean install
@@ -36,20 +25,29 @@ $ cp -p ${UDF_BUILD_PATH}/target/presto-udaf-1.0-SNAPSHOT/*.jar <presto-minio-pa
 $ #start docker containers
 ```
 
-see presto-minio coordinator and confirm if you can see presto-udaf registered
+to see presto-minio coordinator and confirm if you can see presto-udaf functions registered
 ```
 $ docker logs --tail 100 -f coordinator
 ```
 
-execute `presto-cli`
+execute `presto-cli` to run the 
 
 ```
-$ presto-cli
-# debug mode
-$ presto-cli --debug
+$ docker exec -it coordinator presto-cli
 ```
 
 function list
 ```
 presto> show functions;
+```
+
+run sql
+```
+select get_square(2);
+
+>> 4
+
+select get_square(null);
+
+>> 0
 ```
